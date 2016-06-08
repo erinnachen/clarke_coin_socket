@@ -19,6 +19,16 @@ config :clarke_coin_socket, ClarkeCoinSocket.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :clarke_coin_socket, ClarkeCoinSocket.Endpoint,
+  secret_key_base: System.get_env("SECRET_KEY_BASE")
+
+# Configure your database
+config :clarke_coin_socket, ClarkeCoinSocket.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  url: System.get_env("DATABASE_URL"),
+  pool_size: 20
+
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
@@ -59,7 +69,3 @@ config :logger, level: :info
 # for the new static assets to be served after a hot upgrade:
 #
 #     config :clarke_coin_socket, ClarkeCoinSocket.Endpoint, root: "."
-
-# Finally import the config/prod.secret.exs
-# which should be versioned separately.
-import_config "prod.secret.exs"

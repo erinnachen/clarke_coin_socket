@@ -1,6 +1,17 @@
 defmodule ClarkeCoinSocket.ClkPeers do
   def fetch_peers do
-    case HTTPoison.get("http://dns1.clarkecoin.org/api/peers") do
+    case HTTPoison.get!("http://dns1.clarkecoin.org/api/peers") do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        IO.puts body
+      {:ok, %HTTPoison.Response{status_code: 404}} ->
+        IO.puts "Not found :("
+      {:error, %HTTPoison.Error{reason: reason}} ->
+        IO.inspect reason
+    end
+  end
+
+  def ping_peers do
+    case HTTPoison.post!("http://159.203.206.61:3000/peers" , "{\"port\": 80}", [{"Content-Type", "application/json"},{"Accept", "application/json"}], [{:timeout, :infinity}, {:recv_timeout, :infinity}]) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         IO.puts body
       {:ok, %HTTPoison.Response{status_code: 404}} ->
@@ -10,3 +21,7 @@ defmodule ClarkeCoinSocket.ClkPeers do
     end
   end
 end
+
+# Fetch peers
+# Handle the response
+#
