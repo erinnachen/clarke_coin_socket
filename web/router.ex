@@ -20,7 +20,8 @@ defmodule ClarkeCoinSocket.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", ClarkeCoinSocket do
-  #   pipe_through :api
-  # end
+  scope "/ping", ClarkeCoinSocket do
+    pipe_through :api
+    post "/", PeerController, :ping
+  end
 end

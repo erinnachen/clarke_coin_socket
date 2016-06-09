@@ -11,7 +11,9 @@ defmodule ClarkeCoinSocket.ClkPeers do
   end
 
   def ping_peers do
-    case HTTPoison.post!("http://159.203.206.61:3000/peers" , "{\"port\": 80}", [{"Content-Type", "application/json"},{"Accept", "application/json"}], [{:timeout, :infinity}, {:recv_timeout, :infinity}]) do
+    opts = "{\"port\": 80 }"
+    IO.puts "OPTS: #{opts}"
+    case HTTPoison.post("http://159.203.206.61:3000/peers" , opts, [{"Content-Type", "application/json"},{"Accept", "application/json"}], [{:recv_timeout, 15000}]) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         IO.puts body
       {:ok, %HTTPoison.Response{status_code: 404}} ->
