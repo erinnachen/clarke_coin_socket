@@ -24,4 +24,9 @@ defmodule ClarkeCoinSocket.Router do
     pipe_through :api
     post "/", PeerController, :ping
   end
+
+  scope "/block_height", ClarkeCoinSocket do
+    pipe_through :api
+    get "/", PeerController, :block_height
+  end
 end

@@ -14,20 +14,12 @@ use Mix.Config
 config :clarke_coin_socket, ClarkeCoinSocket.Endpoint,
   http: [port: {:system, "PORT"}],
   url: [host: "107.170.205.129", port: 80],
-  cache_static_manifest: "priv/static/manifest.json"
+  cache_static_manifest: "priv/static/manifest.json",
+  server: true,
+  root: "."
 
 # Do not print debug messages in production
 config :logger, level: :info
-
-config :clarke_coin_socket, ClarkeCoinSocket.Endpoint,
-  secret_key_base: System.get_env("SECRET_KEY_BASE")
-
-# Configure your database
-config :clarke_coin_socket, ClarkeCoinSocket.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  url: System.get_env("DATABASE_URL"),
-  pool_size: 20
-
 
 # ## SSL Support
 #
@@ -69,3 +61,4 @@ config :clarke_coin_socket, ClarkeCoinSocket.Repo,
 # for the new static assets to be served after a hot upgrade:
 #
 #     config :clarke_coin_socket, ClarkeCoinSocket.Endpoint, root: "."
+import_config "prod.secret.exs"
